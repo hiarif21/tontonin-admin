@@ -32,7 +32,9 @@ const StreamingServicesEdit = ({ show }: StreamingServicesEditProps) => {
           : toast.error(result.message);
       })();
     }
-  }, [getData, id]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const handleSubmit = async () => {
     const result = await editData(id, data);
