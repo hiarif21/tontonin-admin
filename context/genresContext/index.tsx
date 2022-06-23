@@ -27,7 +27,7 @@ export const GenresProvider = (props: Props) => {
   const createData = async (data: { name: string }) => {
     const result = await createGenre(data);
 
-    loadData();
+    if (result.success) loadData();
 
     return result;
   };

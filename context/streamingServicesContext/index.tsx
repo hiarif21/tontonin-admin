@@ -27,7 +27,7 @@ export const StreamingServicesProvider = (props: Props) => {
   const createData = async (data: { name: string }) => {
     const result = await createStreamingService(data);
 
-    loadData();
+    if (result.success) loadData();
 
     return result;
   };

@@ -27,7 +27,7 @@ export const RolesProvider = (props: Props) => {
   const createData = async (data: { name: string }) => {
     const result = await createRole(data);
 
-    loadData();
+    if (result.success) loadData();
 
     return result;
   };
