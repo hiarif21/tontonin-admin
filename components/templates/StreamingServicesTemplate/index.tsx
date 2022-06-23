@@ -15,7 +15,9 @@ const StreamingServicesTemplate = () => {
     <>
       <AddButtonStatic
         title={router.pathname.replace('-', ' ').replace('/', '')}
-        onClick={() => router.push(`?method=create`, `${router.pathname}`)}
+        onClick={() =>
+          router.push(`?method=create`, `${router.pathname}`, { shallow: true })
+        }
       />
       <StreamingServicesCreate show={method === 'create'} />
       <StreamingServicesEdit show={method === 'edit'} />

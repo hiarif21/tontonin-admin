@@ -49,7 +49,9 @@ const StreamingServicesList = () => {
           <>
             <button
               onClick={() =>
-                router.push(`?method=edit&id=${_id}`, `${router.pathname}`)
+                router.push(`?method=edit&id=${_id}`, `${router.pathname}`, {
+                  shallow: true,
+                })
               }>
               <Icons icon={'Edit'} color={'primary'} size={'small'} />
             </button>

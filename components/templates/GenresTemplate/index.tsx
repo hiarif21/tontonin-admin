@@ -15,7 +15,9 @@ const GenresTemplate = () => {
     <>
       <AddButtonStatic
         title={router.pathname.replace('-', ' ').replace('/', '')}
-        onClick={() => router.push(`?method=create`, `${router.pathname}`)}
+        onClick={() =>
+          router.push(`?method=create`, `${router.pathname}`, { shallow: true })
+        }
       />
       <GenresCreate show={method === 'create'} />
       <GenresEdit show={method === 'edit'} />

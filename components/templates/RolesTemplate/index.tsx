@@ -15,7 +15,9 @@ const RolesTemplate = () => {
     <>
       <AddButtonStatic
         title={router.pathname.replace('-', ' ').replace('/', '')}
-        onClick={() => router.push(`?method=create`, `${router.pathname}`)}
+        onClick={() =>
+          router.push(`?method=create`, `${router.pathname}`, { shallow: true })
+        }
       />
       <RolesCreate show={method === 'create'} />
       <RolesEdit show={method === 'edit'} />

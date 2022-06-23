@@ -35,7 +35,7 @@ const GenresCreate = ({ show }: GenresCreateProps) => {
   };
 
   const handleBack = () => {
-    router.push(`${router.pathname}`);
+    router.push(`${router.pathname}`, undefined, { shallow: true });
   };
 
   return (
