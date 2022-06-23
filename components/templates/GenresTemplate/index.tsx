@@ -14,7 +14,7 @@ const GenresTemplate = () => {
   return (
     <>
       <AddButtonStatic
-        title="Streaming Services"
+        title="Genre"
         onClick={() => router.push(`?method=create`, `${router.pathname}`)}
       />
       <GenresCreate show={method === 'create'} />
