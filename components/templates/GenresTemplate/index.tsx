@@ -14,12 +14,12 @@ const GenresTemplate = () => {
   return (
     <>
       <AddButtonStatic
-        title="Genre"
+        title={router.pathname.replace('-', ' ').replace('/', '')}
         onClick={() => router.push(`?method=create`, `${router.pathname}`)}
       />
       <GenresCreate show={method === 'create'} />
       <GenresEdit show={method === 'edit'} />
-      <Layout title="Streaming Services">
+      <Layout title={router.pathname.replace('-', ' ').replace('/', '')}>
         <div className="flex flex-col gap-5">
           <GenresList />
         </div>

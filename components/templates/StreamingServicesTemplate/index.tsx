@@ -14,12 +14,12 @@ const StreamingServicesTemplate = () => {
   return (
     <>
       <AddButtonStatic
-        title="Streaming Services"
+        title={router.pathname.replace('-', ' ').replace('/', '')}
         onClick={() => router.push(`?method=create`, `${router.pathname}`)}
       />
       <StreamingServicesCreate show={method === 'create'} />
       <StreamingServicesEdit show={method === 'edit'} />
-      <Layout title="Streaming Services">
+      <Layout title={router.pathname.replace('-', ' ').replace('/', '')}>
         <div className="flex flex-col gap-5">
           <StreamingServicesList />
         </div>
