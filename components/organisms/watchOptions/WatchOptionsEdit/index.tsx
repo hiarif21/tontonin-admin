@@ -143,7 +143,7 @@ const WatchOptionsEdit = ({ show }: WatchOptionsEditProps) => {
     <Modal show={show}>
       <div
         className={classNames(
-          'fixed h-full w-full bg-white transition-all duration-500 ease-in-out',
+          'fixed h-full w-full overflow-auto bg-white transition-all duration-500  ease-in-out',
           {
             'right-0': show,
             '-right-full': !show,

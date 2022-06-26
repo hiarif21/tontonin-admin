@@ -11,7 +11,7 @@ const HeaderCreateAndEdit = ({
   onBack,
 }: HeaderCreateAndEditProps) => {
   return (
-    <div className="sticky top-0 grid grid-cols-3 bg-white p-5 shadow-sm">
+    <div className="sticky top-0 left-0 z-50 grid grid-cols-3 bg-white p-5 shadow-sm">
       <div className="flex items-center place-self-start">
         <button onClick={onBack}>
           <Icons icon={'Back'} />
