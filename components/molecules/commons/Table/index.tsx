@@ -7,7 +7,6 @@ interface TableProps {
 }
 
 const Table = ({ columns, dataSource }: TableProps) => {
-  console.log(dataSource);
   return (
     <>
       {columns && dataSource && dataSource.length !== 0 ? (
