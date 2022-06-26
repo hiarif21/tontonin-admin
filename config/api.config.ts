@@ -6,13 +6,13 @@ interface fetchDataProps extends AxiosRequestConfig {
     path: string;
 }
 
-const fetchData = async ({ method, path, data = null }: fetchDataProps) => {
+const fetchData = async ({ method, path, data = null, signal }: fetchDataProps) => {
     const url = root + path
 
     let configAxios: AxiosRequestConfig
 
     if (data === null) {
-        configAxios = { method, url, responseType: "json" }
+        configAxios = { method, url, responseType: "json", signal: signal }
     } else {
         configAxios = { method, url, data }
     }
