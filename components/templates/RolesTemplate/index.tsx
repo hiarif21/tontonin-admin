@@ -19,9 +19,9 @@ const RolesTemplate = () => {
           router.push(`?method=create`, `${router.pathname}`, { shallow: true })
         }
       />
-      <RolesCreate show={method === 'create'} />
-      <RolesEdit show={method === 'edit'} />
       <Layout title={router.pathname.replace('-', ' ').replace('/', '')}>
+        <RolesCreate show={method === 'create'} />
+        <RolesEdit show={method === 'edit'} />
         <div className="flex flex-col gap-5">
           <RolesList />
         </div>

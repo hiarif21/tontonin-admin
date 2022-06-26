@@ -19,9 +19,9 @@ const StreamingServicesTemplate = () => {
           router.push(`?method=create`, `${router.pathname}`, { shallow: true })
         }
       />
-      <StreamingServicesCreate show={method === 'create'} />
-      <StreamingServicesEdit show={method === 'edit'} />
       <Layout title={router.pathname.replace('-', ' ').replace('/', '')}>
+        <StreamingServicesCreate show={method === 'create'} />
+        <StreamingServicesEdit show={method === 'edit'} />
         <div className="flex flex-col gap-5">
           <StreamingServicesList />
         </div>

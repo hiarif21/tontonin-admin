@@ -19,9 +19,9 @@ const GenresTemplate = () => {
           router.push(`?method=create`, `${router.pathname}`, { shallow: true })
         }
       />
-      <GenresCreate show={method === 'create'} />
-      <GenresEdit show={method === 'edit'} />
       <Layout title={router.pathname.replace('-', ' ').replace('/', '')}>
+        <GenresCreate show={method === 'create'} />
+        <GenresEdit show={method === 'edit'} />
         <div className="flex flex-col gap-5">
           <GenresList />
         </div>

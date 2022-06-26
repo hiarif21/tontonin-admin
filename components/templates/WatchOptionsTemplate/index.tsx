@@ -17,12 +17,14 @@ const WatchOptionsTemplate = () => {
       <AddButtonStatic
         title={router.pathname.replace('-', ' ').replace('/', '')}
         onClick={() =>
-          router.push(`?method=create`, `${router.pathname}`, { shallow: true })
+          router.push(`?method=create`, `${router.pathname}`, {
+            shallow: true,
+          })
         }
       />
-      <WatchOptionsCreate show={method === 'create'} />
-      <WatchOptionsEdit show={method === 'edit'} />
       <Layout title={router.pathname.replace('-', ' ').replace('/', '')}>
+        <WatchOptionsCreate show={method === 'create'} />
+        <WatchOptionsEdit show={method === 'edit'} />
         <div className="flex flex-col gap-5 p-5">
           <WatchOptionsFilterList />
           <WatchOptionsList />
