@@ -70,7 +70,7 @@ const AutoComplete = ({
         <ul
           ref={ref}
           className={classNames(
-            'absolute flex w-full flex-col overflow-hidden rounded-xl rounded-b-xl bg-white shadow-md',
+            'absolute z-50 flex w-full flex-col overflow-hidden rounded-xl rounded-b-xl bg-white shadow-md',
             {
               hidden: !show,
             }
