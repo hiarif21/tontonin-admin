@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactNode, RefObject, useRef } from 'react';
+import { ReactNode, RefObject, useEffect, useRef } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 interface ModalProps {
@@ -14,6 +14,14 @@ const Modal = ({ show, children, onClickOutside, _ref }: ModalProps) => {
   onClickOutside ? onClickOutside : (onClickOutside = () => {});
 
   useOnClickOutside(_ref || ref, onClickOutside);
+
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+  }, [show]);
 
   return (
     <div
