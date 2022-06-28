@@ -6,21 +6,24 @@ import { GenresProvider } from '../context/genresContext';
 import { RolesProvider } from '../context/rolesContext';
 import { WatchOptionsProvider } from '../context/watchOptionsContext';
 import { PersonsProvider } from '../context/personsContext';
+import { MoviesProvider } from '../context/moviesContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <PersonsProvider>
-      <WatchOptionsProvider>
-        <RolesProvider>
-          <GenresProvider>
-            <StreamingServicesProvider>
-              <Notify />
-              <Component {...pageProps} />
-            </StreamingServicesProvider>
-          </GenresProvider>
-        </RolesProvider>
-      </WatchOptionsProvider>
-    </PersonsProvider>
+    <MoviesProvider>
+      <PersonsProvider>
+        <WatchOptionsProvider>
+          <RolesProvider>
+            <GenresProvider>
+              <StreamingServicesProvider>
+                <Notify />
+                <Component {...pageProps} />
+              </StreamingServicesProvider>
+            </GenresProvider>
+          </RolesProvider>
+        </WatchOptionsProvider>
+      </PersonsProvider>
+    </MoviesProvider>
   );
 }
 
