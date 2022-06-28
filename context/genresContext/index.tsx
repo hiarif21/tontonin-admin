@@ -35,7 +35,9 @@ export const GenresProvider = (props: Props) => {
   const loadData = async () => {
     const result = await getGenres();
 
-    setData(result.data);
+    if (result.success) setData(result.data);
+
+    return result;
   };
 
   const getData = async (id: string) => {
@@ -60,7 +62,15 @@ export const GenresProvider = (props: Props) => {
     return result;
   };
 
-  const store = { data, setData, deleteData, createData, getData, editData };
+  const store = {
+    data,
+    setData,
+    deleteData,
+    createData,
+    getData,
+    editData,
+    loadData,
+  };
 
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
