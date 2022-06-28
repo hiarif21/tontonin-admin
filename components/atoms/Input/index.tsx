@@ -6,6 +6,7 @@ interface InputProps {
   value: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   name?: string;
+  min?: number;
 }
 
 const Input = ({
@@ -14,6 +15,7 @@ const Input = ({
   value,
   onChange,
   name,
+  min,
 }: InputProps) => {
   return (
     <input
@@ -25,6 +27,7 @@ const Input = ({
       autoComplete="off"
       autoCorrect="off"
       className="w-full rounded-xl border-[1px] border-slate-300 p-4 font-medium placeholder:text-slate-300 focus:outline-1 focus:outline-slate-300 focus-visible:outline-none"
+      min={min}
     />
   );
 };

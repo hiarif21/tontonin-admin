@@ -8,6 +8,7 @@ interface TextFieldProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   label: string;
   name?: string;
+  min?: number;
 }
 
 const TextField = ({
@@ -17,6 +18,7 @@ const TextField = ({
   label,
   value,
   name,
+  min,
 }: TextFieldProps) => {
   return (
     <label className="flex flex-col gap-2 font-bold">
@@ -27,6 +29,7 @@ const TextField = ({
         value={value}
         onChange={onChange}
         name={name}
+        min={min}
       />
     </label>
   );
