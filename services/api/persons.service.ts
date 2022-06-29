@@ -1,20 +1,11 @@
 import fetchData from "../../config/api.config";
-
-interface DataPerson {
-    name: string
-    role: string
-}
-
-interface ParamsPerson {
-    page?: number
-    name?: string
-}
+import { CreatePerson, DeletePerson, EditPerson, GetPerson, GetPersons } from "../../types/persons";
 
 const path = '/persons'
 
-export const getPersons = (
-    { page = 1, name = '' }: ParamsPerson = {},
-    signal: AbortSignal | undefined = undefined
+export const getPersons: GetPersons = (
+    { page = 1, name = '' } = {},
+    signal = undefined
 ) => {
 
     let params = '?'
@@ -24,18 +15,18 @@ export const getPersons = (
     return fetchData({ method: "GET", path: `${path + params}`, signal })
 }
 
-export const deletePerson = (id: string) => {
+export const deletePerson: DeletePerson = (id) => {
     return fetchData({ method: "DELETE", path: `${path}/${id}` })
 }
 
-export const createPerson = (data: DataPerson) => {
+export const createPerson: CreatePerson = (data) => {
     return fetchData({ method: "POST", path, data })
 }
 
-export const getPerson = (id: string) => {
+export const getPerson: GetPerson = (id) => {
     return fetchData({ method: "GET", path: `${path}/${id}` })
 }
 
-export const editPerson = (id: string, data: DataPerson) => {
+export const editPerson: EditPerson = (id, data) => {
     return fetchData({ method: "PUT", path: `${path}/${id}`, data })
 }

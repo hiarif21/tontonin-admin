@@ -11,7 +11,7 @@ const PersonsList = () => {
   const router = useRouter();
   const refLastElement = useRef(null);
 
-  const { data, deleteData, loadMoreData }: any = usePersons();
+  const { data, deleteData, loadMoreData } = usePersons();
 
   useInfinite(refLastElement, loadMoreData);
 

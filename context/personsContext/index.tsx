@@ -12,20 +12,20 @@ import {
   getPerson,
   getPersons,
 } from '../../services/api/persons.service';
-
-interface Props {
-  children: ReactNode;
-}
-
-interface DataPerson {
-  name: string;
-  role: string;
-}
+import {
+  CreatePerson,
+  DataPerson,
+  DeletePerson,
+  EditDataPersons,
+  GetPerson,
+  LoadDataPersons,
+  UsePersons,
+} from '../../types/persons';
 
 const Context = createContext({});
 
-export const PersonsProvider = (props: Props) => {
-  const [data, setData] = useState<any[]>([]);
+export const PersonsProvider = (props: { children: ReactNode }) => {
+  const [data, setData] = useState<DataPerson[]>([]);
   const [totalData, setTotalData] = useState(0);
   const [filter, setFilter] = useState({
     name: '',
@@ -43,7 +43,7 @@ export const PersonsProvider = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
-  const deleteData = async (id: string) => {
+  const deleteData: DeletePerson = async (id) => {
     const result = await deletePerson(id);
 
     if (result.success) {
@@ -54,7 +54,7 @@ export const PersonsProvider = (props: Props) => {
     return result;
   };
 
-  const createData = async (data: DataPerson) => {
+  const createData: CreatePerson = async (data) => {
     const result = await createPerson(data);
 
     if (result.success) loadData();
@@ -62,7 +62,7 @@ export const PersonsProvider = (props: Props) => {
     return result;
   };
 
-  const loadData = async (signal: AbortSignal | undefined = undefined) => {
+  const loadData: LoadDataPersons = async (signal = undefined) => {
     const result = await getPersons({ name: filter.name }, signal);
 
     if (result?.success) {
@@ -73,16 +73,12 @@ export const PersonsProvider = (props: Props) => {
     return result;
   };
 
-  const getData = async (id: string) => {
+  const getData: GetPerson = async (id) => {
     const result = await getPerson(id);
     return result;
   };
 
-  const editData = async (
-    id: string,
-    newData: DataPerson,
-    additionalData: { name: string }
-  ) => {
+  const editData: EditDataPersons = async (id, newData, additionalData) => {
     const result = await editPerson(id, newData);
 
     if (result.success) {
@@ -91,10 +87,9 @@ export const PersonsProvider = (props: Props) => {
           if (val._id === id) {
             return {
               ...val,
-              role: {
-                _id: newData.role,
-                name: additionalData.name,
-              },
+              role: additionalData.roles.find(
+                (value) => value._id === newData.role
+              )!,
               name: newData.name,
             };
           }
@@ -136,6 +131,7 @@ export const PersonsProvider = (props: Props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export const usePersons = () => {
+// @ts-ignore
+export const usePersons: UsePersons = () => {
   return useContext(Context);
 };

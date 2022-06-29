@@ -4,37 +4,22 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { usePersons } from '../../../../context/personsContext';
 import { useRoles } from '../../../../context/rolesContext';
+import {
+  InitialStateDataPerson,
+  InitialStateFilteredAndSelectedDataPerson,
+  InitialStateListPerson,
+  PersonsEditProps,
+} from '../../../../types/persons';
 import Modal from '../../../atoms/Modal';
 import AutoComplete from '../../../molecules/commons/AutoComplete';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
 
-interface PersonsEditProps {
-  show: boolean;
-}
-
-interface RolesData {
-  _id: string;
-  name: string;
-}
-
-interface InitialStateRoles {
-  label: string;
-  value_search: string;
-  name_search: string;
-  data_list: RolesData[];
-  data_index_list: string;
-}
-
-interface InitialStateFilteredAndSelectedData {
-  roles: RolesData[];
-}
-
-const initialStateData = {
+const initialStateData: InitialStateDataPerson = {
   name: '',
 };
 
-const initialStateRoles: InitialStateRoles = {
+const initialStateList: InitialStateListPerson = {
   label: 'Roles',
   value_search: '',
   name_search: 'roles',
@@ -42,7 +27,7 @@ const initialStateRoles: InitialStateRoles = {
   data_index_list: 'name',
 };
 
-const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedData =
+const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataPerson =
   {
     roles: [],
   };
@@ -50,10 +35,10 @@ const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedData =
 const PersonsEdit = ({ show }: PersonsEditProps) => {
   const router = useRouter();
 
-  const { id } = router.query;
+  const { id, method } = router.query;
 
   const [data, setData] = useState(initialStateData);
-  const [roles, setRoles] = useState(initialStateRoles);
+  const [list, setList] = useState(initialStateList);
 
   const [filteredData, setFilteredData] = useState(
     initialStateFilteredAndSelectedData
@@ -62,19 +47,19 @@ const PersonsEdit = ({ show }: PersonsEditProps) => {
     initialStateFilteredAndSelectedData
   );
 
-  const { getData, editData }: any = usePersons();
-  const { loadData }: any = useRoles();
+  const { getData, editData } = usePersons();
+  const { loadData } = useRoles();
 
   useEffect(() => {
     // get data
     if (id) {
       (async () => {
-        const result = await getData(id);
+        const result = await getData(id.toString());
         setData({
-          name: result.data.name,
+          name: result.data!.name,
         });
         setSelectedData({
-          roles: [result.data.role],
+          roles: [result.data!.role],
         });
       })();
     }
@@ -86,39 +71,39 @@ const PersonsEdit = ({ show }: PersonsEditProps) => {
   useEffect(() => {
     (async () => {
       const result = await loadData();
-      setRoles({ ...roles, data_list: result.data });
+      setList({ ...list, data_list: result.data });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [method]);
 
   //   filter list
   useEffect(() => {
-    if (roles.value_search === '') {
-      setFilteredData({ roles: roles.data_list });
+    if (list.value_search === '') {
+      setFilteredData({ roles: list.data_list });
     } else {
       setFilteredData({
-        roles: roles.data_list.filter((val) =>
-          val.name.toLowerCase().includes(roles.value_search.toLowerCase())
+        roles: list.data_list.filter((val) =>
+          val.name.toLowerCase().includes(list.value_search.toLowerCase())
         ),
       });
     }
-  }, [roles.data_list, roles.value_search]);
+  }, [list.data_list, list.value_search]);
 
   const handleSubmit = async () => {
     const result = await editData(
-      id,
+      id!.toString(),
       {
         name: data.name,
         role: selectedData.roles[0]._id,
       },
       {
-        name: selectedData.roles[0].name,
+        ...selectedData,
       }
     );
 
     if (result.success) {
       setData(initialStateData);
-      setRoles(initialStateRoles);
+      setList(initialStateList);
       setFilteredData(initialStateFilteredAndSelectedData);
       setSelectedData(initialStateFilteredAndSelectedData);
       handleBack();
@@ -154,17 +139,17 @@ const PersonsEdit = ({ show }: PersonsEditProps) => {
             onChange={(e) => setData({ ...data, name: e.target.value })}
           />
           <AutoComplete
-            label={roles.label}
-            valueSearch={roles.value_search}
-            nameSearch={roles.name_search}
+            label={list.label}
+            valueSearch={list.value_search}
+            nameSearch={list.name_search}
             onChangeSearch={(e) =>
-              setRoles({
-                ...roles,
+              setList({
+                ...list,
                 value_search: e.target.value,
               })
             }
             dataList={filteredData.roles}
-            dataIndexList={roles.data_index_list}
+            dataIndexList={list.data_index_list}
             onClickList={(val) => setSelectedData({ roles: [val] })}
             onDeleteList={(id) =>
               setSelectedData({

@@ -2,7 +2,7 @@ import { usePersons } from '../../../../context/personsContext';
 import SearchField from '../../../molecules/commons/SearchField';
 
 const PersonsFilterList = () => {
-  const { filter, setFilter }: any = usePersons();
+  const { filter, setFilter } = usePersons();
 
   return (
     <SearchField

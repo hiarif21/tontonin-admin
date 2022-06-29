@@ -2,17 +2,10 @@ import { useEffect } from 'react';
 import PersonsTemplate from '../../components/templates/PersonsTemplate';
 import { usePersons } from '../../context/personsContext';
 import { getPersons } from '../../services/api/persons.service';
-
-interface PersonsProps {
-  data: {
-    _id: string;
-    name: string;
-  }[];
-  total_data: number;
-}
+import { PersonsProps } from '../../types/persons';
 
 const Persons = ({ data, total_data }: PersonsProps) => {
-  const { setData, setTotalData }: any = usePersons();
+  const { setData, setTotalData } = usePersons();
 
   useEffect(() => {
     setData(data);
