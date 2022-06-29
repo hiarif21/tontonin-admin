@@ -6,53 +6,19 @@ import { useGenres } from '../../../../context/genresContext';
 import { useMovies } from '../../../../context/moviesContext';
 import { usePersons } from '../../../../context/personsContext';
 import { useWatchOptions } from '../../../../context/watchOptionsContext';
+import { DataGenre } from '../../../../types/genres';
+import {
+  InitialStateDataMovie,
+  InitialStateFilteredAndSelectedDataMovie,
+  InitialStateListMovie,
+  MoviesCreateProps,
+} from '../../../../types/movies';
 import Modal from '../../../atoms/Modal';
 import AutoComplete from '../../../molecules/commons/AutoComplete';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
 
-interface MoviesCreateProps {
-  show: boolean;
-}
-
-interface WatchOptionsData {
-  _id: string;
-  title: string;
-  link_streaming: string;
-}
-
-interface PersonsData {
-  _id: string;
-  name: string;
-}
-
-interface GenresData {
-  _id: string;
-  name: string;
-}
-
-interface InitialStateListProperty {
-  label: string;
-  name_search: string;
-  data_index_list: string;
-}
-
-interface InitialStateList {
-  watch_options: InitialStateListProperty;
-  persons: InitialStateListProperty;
-  genres: InitialStateListProperty & {
-    value_search: string;
-    data_list: GenresData[];
-  };
-}
-
-interface InitialStateFilteredAndSelectedData {
-  watch_options: WatchOptionsData[];
-  persons: PersonsData[];
-  genres: GenresData[];
-}
-
-const initialStateData = {
+const initialStateData: InitialStateDataMovie = {
   title: '',
   image: '',
   release_year: 0,
@@ -61,7 +27,7 @@ const initialStateData = {
   link_trailer: '',
 };
 
-const initialStateList: InitialStateList = {
+const initialStateList: InitialStateListMovie = {
   watch_options: {
     label: 'Watch Options',
     name_search: 'watch options',
@@ -81,7 +47,7 @@ const initialStateList: InitialStateList = {
   },
 };
 
-const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedData =
+const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataMovie =
   {
     watch_options: [],
     persons: [],
@@ -101,10 +67,10 @@ const MoviesCreate = ({ show }: MoviesCreateProps) => {
     initialStateFilteredAndSelectedData
   );
 
-  const { createData }: any = useMovies();
-  const UseWatchOptions: any = useWatchOptions();
-  const UsePersons: any = usePersons();
-  const UseGenres: any = useGenres();
+  const { createData } = useMovies();
+  const UseWatchOptions = useWatchOptions();
+  const UsePersons = usePersons();
+  const UseGenres = useGenres();
 
   const dataWatchOptions = UseWatchOptions.data;
   const loadDataWatchOptions = UseWatchOptions.loadData;
@@ -162,7 +128,7 @@ const MoviesCreate = ({ show }: MoviesCreateProps) => {
     } else {
       setFilteredData({
         ...filteredData,
-        genres: list.genres.data_list.filter((val) =>
+        genres: list.genres.data_list.filter((val: DataGenre) =>
           val.name
             .toLowerCase()
             .includes(list.genres.value_search.toLowerCase())
@@ -181,9 +147,15 @@ const MoviesCreate = ({ show }: MoviesCreateProps) => {
       runtime: data.runtime,
       storyline: data.storyline,
       link_trailer: data.link_trailer,
-      watch_options: selectedData.watch_options,
-      persons: selectedData.persons,
-      genres: selectedData.genres,
+      watch_options: selectedData.watch_options.map((val) => {
+        return val._id;
+      }),
+      persons: selectedData.persons.map((val) => {
+        return val._id;
+      }),
+      genres: selectedData.genres.map((val) => {
+        return val._id;
+      }),
     });
 
     if (result.success) {

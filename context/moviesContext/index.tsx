@@ -12,27 +12,21 @@ import {
   getMovie,
   getMovies,
 } from '../../services/api/movies.service';
-
-interface Props {
-  children: ReactNode;
-}
-
-interface DataMovie {
-  title: string;
-  image: string;
-  release_year: number;
-  runtime: number;
-  storyline: string;
-  link_trailer: string;
-  watch_options: string[];
-  persons: string[];
-  genres: string[];
-}
+import {
+  CreateMovie,
+  DataMovie,
+  DeleteMovie,
+  EditDataMovies,
+  GetMovie,
+  GetMovies,
+  LoadDataMovies,
+  UseMovies,
+} from '../../types/movies';
 
 const Context = createContext({});
 
-export const MoviesProvider = (props: Props) => {
-  const [data, setData] = useState<any[]>([]);
+export const MoviesProvider = (props: { children: ReactNode }) => {
+  const [data, setData] = useState<DataMovie[]>([]);
   const [totalData, setTotalData] = useState(0);
   const [filter, setFilter] = useState({
     title: '',
@@ -50,7 +44,7 @@ export const MoviesProvider = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
-  const deleteData = async (id: string) => {
+  const deleteData: DeleteMovie = async (id) => {
     const result = await deleteMovie(id);
 
     if (result.success) {
@@ -61,7 +55,7 @@ export const MoviesProvider = (props: Props) => {
     return result;
   };
 
-  const createData = async (data: DataMovie) => {
+  const createData: CreateMovie = async (data) => {
     const result = await createMovie(data);
 
     if (result.success) loadData();
@@ -69,7 +63,7 @@ export const MoviesProvider = (props: Props) => {
     return result;
   };
 
-  const loadData = async (signal: AbortSignal | undefined = undefined) => {
+  const loadData: LoadDataMovies = async (signal = undefined) => {
     const result = await getMovies({ title: filter.title }, signal);
 
     if (result?.success) {
@@ -80,21 +74,15 @@ export const MoviesProvider = (props: Props) => {
     return result;
   };
 
-  const getData = async (id: string) => {
+  const getData: GetMovie = async (id) => {
     const result = await getMovie(id);
     return result;
   };
 
-  const editData = async (
-    id: string,
-    newData: DataMovie,
-    additionalData: {
-      watch_options: { _id: string; title: string; link_streaming: string }[];
-      persons: { _id: string; name: string }[];
-      genres: { _id: string; name: string }[];
-    }
-  ) => {
+  const editData: EditDataMovies = async (id, newData, additionalData) => {
     const result = await editMovie(id, newData);
+
+    console.log(newData.watch_options);
 
     if (result.success) {
       setData(
@@ -111,15 +99,17 @@ export const MoviesProvider = (props: Props) => {
               watch_options: newData.watch_options.map((val) => {
                 return additionalData.watch_options.find(
                   (value) => value._id === val
-                );
+                )!;
               }),
               persons: newData.persons.map((val) => {
                 return additionalData.persons.find(
                   (value) => value._id === val
-                );
+                )!;
               }),
               genres: newData.genres.map((val) => {
-                return additionalData.genres.find((value) => value._id === val);
+                return additionalData.genres.find(
+                  (value) => value._id === val
+                )!;
               }),
             };
           }
@@ -161,6 +151,7 @@ export const MoviesProvider = (props: Props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export const useMovies = () => {
+// @ts-ignore
+export const useMovies: UseMovies = () => {
   return useContext(Context);
 };

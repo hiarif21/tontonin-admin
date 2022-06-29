@@ -2,17 +2,10 @@ import { useEffect } from 'react';
 import MoviesTemplate from '../../components/templates/MoviesTemplate';
 import { useMovies } from '../../context/moviesContext';
 import { getMovies } from '../../services/api/movies.service';
-
-interface MoviesProps {
-  data: {
-    _id: string;
-    name: string;
-  }[];
-  total_data: number;
-}
+import { MoviesProps } from '../../types/movies';
 
 const Movies = ({ data, total_data }: MoviesProps) => {
-  const { setData, setTotalData }: any = useMovies();
+  const { setData, setTotalData } = useMovies();
 
   useEffect(() => {
     setData(data);

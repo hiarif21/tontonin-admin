@@ -2,7 +2,7 @@ import { useMovies } from '../../../../context/moviesContext';
 import SearchField from '../../../molecules/commons/SearchField';
 
 const MoviesFilterList = () => {
-  const { filter, setFilter }: any = useMovies();
+  const { filter, setFilter } = useMovies();
 
   return (
     <SearchField

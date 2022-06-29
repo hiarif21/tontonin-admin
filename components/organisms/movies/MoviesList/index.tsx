@@ -11,7 +11,7 @@ const MoviesList = () => {
   const router = useRouter();
   const refLastElement = useRef(null);
 
-  const { data, deleteData, loadMoreData }: any = useMovies();
+  const { data, deleteData, loadMoreData } = useMovies();
 
   useInfinite(refLastElement, loadMoreData);
 

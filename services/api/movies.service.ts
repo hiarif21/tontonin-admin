@@ -1,48 +1,30 @@
 import fetchData from "../../config/api.config";
-
-interface DataMovie {
-    title: string
-    image: string
-    release_year: number
-    runtime: number
-    storyline: string
-    link_trailer: string
-    watch_options: string[]
-    persons: string[]
-    genres: string[]
-}
-
-interface ParamsMovie {
-    page?: number
-    title?: string
-}
+import { CreateMovie, DeleteMovie, EditMovie, GetMovie, GetMovies } from "../../types/movies";
 
 const path = '/movies'
 
-export const getMovies = (
-    { page = 1, title = '' }: ParamsMovie = {},
-    signal: AbortSignal | undefined = undefined
+export const getMovies: GetMovies = (
+    { page = 1, title = '' } = {},
+    signal = undefined
 ) => {
 
-    let params = '?'
+    const params = new URLSearchParams({ page: page.toString(), title: title }).toString()
 
-    params += new URLSearchParams({ page: page.toString(), title: title }).toString()
-
-    return fetchData({ method: "GET", path: `${path + params}`, signal })
+    return fetchData({ method: "GET", path: `${path + "?" + params}`, signal })
 }
 
-export const deleteMovie = (id: string) => {
+export const deleteMovie: DeleteMovie = (id) => {
     return fetchData({ method: "DELETE", path: `${path}/${id}` })
 }
 
-export const createMovie = (data: DataMovie) => {
+export const createMovie: CreateMovie = (data) => {
     return fetchData({ method: "POST", path, data })
 }
 
-export const getMovie = (id: string) => {
+export const getMovie: GetMovie = (id) => {
     return fetchData({ method: "GET", path: `${path}/${id}` })
 }
 
-export const editMovie = (id: string, data: DataMovie) => {
+export const editMovie: EditMovie = (id: string, data) => {
     return fetchData({ method: "PUT", path: `${path}/${id}`, data })
 }
