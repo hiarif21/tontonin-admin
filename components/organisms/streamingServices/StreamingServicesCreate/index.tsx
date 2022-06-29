@@ -3,13 +3,10 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useStreamingServices } from '../../../../context/streamingServicesContext';
+import { StreamingServicesCreateProps } from '../../../../types/streamingServices';
 import Modal from '../../../atoms/Modal';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
-
-interface StreamingServicesCreateProps {
-  show: boolean;
-}
 
 const initialStateData = {
   name: '',
@@ -20,7 +17,7 @@ const StreamingServicesCreate = ({ show }: StreamingServicesCreateProps) => {
 
   const [data, setData] = useState(initialStateData);
 
-  const { createData }: any = useStreamingServices();
+  const { createData } = useStreamingServices();
 
   const handleSubmit = async () => {
     const result = await createData(data);

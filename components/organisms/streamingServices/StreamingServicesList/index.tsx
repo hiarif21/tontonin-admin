@@ -9,7 +9,7 @@ import Table from '../../../molecules/commons/Table';
 const StreamingServicesList = () => {
   const router = useRouter();
 
-  const { data, deleteData }: any = useStreamingServices();
+  const { data, deleteData } = useStreamingServices();
 
   const [alertDelete, setAlertDelete] = useState({
     id: '',

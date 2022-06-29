@@ -6,17 +6,22 @@ import {
   getStreamingService,
   getStreamingServices,
 } from '../../services/api/streamingServices.service';
-
-interface Props {
-  children: ReactNode;
-}
+import {
+  CreateStreamingService,
+  DataStreamingService,
+  DeleteStreamingService,
+  EditStreamingService,
+  GetStreamingService,
+  GetStreamingServices,
+  UseStreamingServices,
+} from '../../types/streamingServices';
 
 const Context = createContext({});
 
-export const StreamingServicesProvider = (props: Props) => {
-  const [data, setData] = useState<any[]>([]);
+export const StreamingServicesProvider = (props: { children: ReactNode }) => {
+  const [data, setData] = useState<DataStreamingService[]>([]);
 
-  const deleteData = async (id: string) => {
+  const deleteData: DeleteStreamingService = async (id) => {
     const result = await deleteStreamingService(id);
 
     if (result.success) setData(data.filter((val) => val._id !== id));
@@ -24,7 +29,7 @@ export const StreamingServicesProvider = (props: Props) => {
     return result;
   };
 
-  const createData = async (data: { name: string }) => {
+  const createData: CreateStreamingService = async (data) => {
     const result = await createStreamingService(data);
 
     if (result.success) loadData();
@@ -32,7 +37,7 @@ export const StreamingServicesProvider = (props: Props) => {
     return result;
   };
 
-  const loadData = async () => {
+  const loadData: GetStreamingServices = async () => {
     const result = await getStreamingServices();
 
     if (result.success) setData(result.data);
@@ -40,12 +45,12 @@ export const StreamingServicesProvider = (props: Props) => {
     return result;
   };
 
-  const getData = async (id: string) => {
+  const getData: GetStreamingService = async (id) => {
     const result = await getStreamingService(id);
     return result;
   };
 
-  const editData = async (id: string, newData: { name: string }) => {
+  const editData: EditStreamingService = async (id, newData) => {
     const result = await editStreamingService(id, newData);
 
     if (result.success) {
@@ -75,6 +80,7 @@ export const StreamingServicesProvider = (props: Props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export const useStreamingServices = () => {
+// @ts-ignore.
+export const useStreamingServices: UseStreamingServices = () => {
   return useContext(Context);
 };

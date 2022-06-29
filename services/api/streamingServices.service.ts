@@ -1,23 +1,24 @@
 import fetchData from "../../config/api.config";
+import { CreateStreamingService, DeleteStreamingService, EditStreamingService, GetStreamingService, GetStreamingServices } from "../../types/streamingServices";
 
 const path = '/streaming-services'
 
-export const getStreamingServices = () => {
+export const getStreamingServices: GetStreamingServices = () => {
     return fetchData({ method: "GET", path })
 }
 
-export const deleteStreamingService = (id: string) => {
+export const deleteStreamingService: DeleteStreamingService = (id) => {
     return fetchData({ method: "DELETE", path: `${path}/${id}` })
 }
 
-export const createStreamingService = (data: { name: string }) => {
+export const createStreamingService: CreateStreamingService = (data) => {
     return fetchData({ method: "POST", path, data })
 }
 
-export const getStreamingService = (id: string) => {
+export const getStreamingService: GetStreamingService = (id) => {
     return fetchData({ method: "GET", path: `${path}/${id}` })
 }
 
-export const editStreamingService = (id: string, data: { name: string }) => {
+export const editStreamingService: EditStreamingService = (id, data) => {
     return fetchData({ method: "PUT", path: `${path}/${id}`, data })
 }

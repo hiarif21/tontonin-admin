@@ -2,16 +2,10 @@ import { useEffect } from 'react';
 import StreamingServicesTemplate from '../../components/templates/StreamingServicesTemplate';
 import { useStreamingServices } from '../../context/streamingServicesContext';
 import { getStreamingServices } from '../../services/api/streamingServices.service';
-
-interface StreamingServicesProps {
-  data: {
-    _id: string;
-    name: string;
-  }[];
-}
+import { StreamingServicesProps } from '../../types/streamingServices';
 
 const StreamingServices = ({ data }: StreamingServicesProps) => {
-  const { setData }: any = useStreamingServices();
+  const { setData } = useStreamingServices();
 
   useEffect(() => {
     setData(data);
