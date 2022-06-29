@@ -2,17 +2,10 @@ import { useEffect } from 'react';
 import DiscoversTemplate from '../../components/templates/DiscoversTemplate';
 import { useDiscovers } from '../../context/discoversContext';
 import { getDiscovers } from '../../services/api/discovers.service';
-
-interface DiscoversProps {
-  data: {
-    _id: string;
-    name: string;
-  }[];
-  total_data: number;
-}
+import { DiscoversProps } from '../../types/discovers';
 
 const Discovers = ({ data, total_data }: DiscoversProps) => {
-  const { setData, setTotalData }: any = useDiscovers();
+  const { setData, setTotalData } = useDiscovers();
 
   useEffect(() => {
     setData(data);

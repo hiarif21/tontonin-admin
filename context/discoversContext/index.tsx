@@ -12,22 +12,22 @@ import {
   getDiscover,
   getDiscovers,
 } from '../../services/api/discovers.service';
-
-interface Props {
-  children: ReactNode;
-}
-
-interface DataDiscover {
-  title: string;
-  movies: string[];
-}
+import {
+  CreateDiscover,
+  DataDiscover,
+  DeleteDiscover,
+  EditDataDiscovers,
+  GetDiscover,
+  LoadDataDiscovers,
+  UseDiscovers,
+} from '../../types/discovers';
 
 const Context = createContext({});
 
-export const DiscoversProvider = (props: Props) => {
-  const [data, setData] = useState<any[]>([]);
+export const DiscoversProvider = (props: { children: ReactNode }) => {
+  const [data, setData] = useState<DataDiscover[]>([]);
   const [totalData, setTotalData] = useState(0);
-  const [dataSingle, setDataSingle] = useState<{ _id: string } & DataDiscover>({
+  const [dataSingle, setDataSingle] = useState<DataDiscover>({
     _id: '',
     title: '',
     movies: [],
@@ -49,7 +49,7 @@ export const DiscoversProvider = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
-  const deleteData = async (id: string) => {
+  const deleteData: DeleteDiscover = async (id) => {
     const result = await deleteDiscover(id);
 
     if (result.success) {
@@ -60,7 +60,7 @@ export const DiscoversProvider = (props: Props) => {
     return result;
   };
 
-  const createData = async (data: DataDiscover) => {
+  const createData: CreateDiscover = async (data) => {
     const result = await createDiscover(data);
 
     if (result.success) loadData();
@@ -68,7 +68,7 @@ export const DiscoversProvider = (props: Props) => {
     return result;
   };
 
-  const loadData = async (signal: AbortSignal | undefined = undefined) => {
+  const loadData: LoadDataDiscovers = async (signal = undefined) => {
     const result = await getDiscovers({ title: filter.title }, signal);
 
     if (result?.success) {
@@ -79,22 +79,18 @@ export const DiscoversProvider = (props: Props) => {
     return result;
   };
 
-  const getData = async (id: string) => {
+  const getData: GetDiscover = async (id) => {
     const result = await getDiscover(id);
 
     if (result?.success) {
-      setDataSingle(result.data);
+      setDataSingle(result.data!);
       setTotalMovies(result.total_movies);
     }
 
     return result;
   };
 
-  const editData = async (
-    id: string,
-    newData: DataDiscover,
-    additionalData: { movies: { _id: string; title: string; image: string }[] }
-  ) => {
+  const editData: EditDataDiscovers = async (id, newData, additionalData) => {
     const result = await editDiscover(id, newData);
 
     if (result.success) {
@@ -104,7 +100,9 @@ export const DiscoversProvider = (props: Props) => {
             return {
               ...val,
               movies: newData.movies.map((val) => {
-                return additionalData.movies.find((value) => value._id === val);
+                return additionalData.movies.find(
+                  (value) => value._id === val
+                )!;
               }),
               title: newData.title,
             };
@@ -139,7 +137,7 @@ export const DiscoversProvider = (props: Props) => {
       });
       setDataSingle({
         ...dataSingle!,
-        movies: [...dataSingle!.movies, ...result.data.movies],
+        movies: [...dataSingle!.movies, ...result.data!.movies],
       });
       setTotalMovies(result.total_movies);
     }
@@ -164,6 +162,7 @@ export const DiscoversProvider = (props: Props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export const useDiscovers = () => {
+// @ts-ignore
+export const useDiscovers: UseDiscovers = () => {
   return useContext(Context);
 };

@@ -1,136 +1,116 @@
 import { Dispatch } from "react"
 import { DataGenre } from "./genres"
+import { DataMovie } from "./movies"
 import { DataPerson } from "./persons"
 import { DataStreamingService } from "./streamingServices"
 import { DataWatchOption } from "./watchOptions"
 
 // others
-export interface DataMovie {
+export interface DataDiscover {
     _id: string
     title: string
-    image: string
-    release_year: number
-    runtime: number
-    storyline: string
-    link_trailer: string
-    watch_options: DataWatchOption[]
-    persons: DataPerson[]
-    genres: DataGenre[]
+    movies: DataMovie[]
 }
 
 // response api
-export interface GetMoviesResponse {
+export interface GetDiscoversResponse {
     success: boolean,
     message: string,
     page: number
     total_page: number
     total_data: number
-    data: [] | DataMovie[]
+    data: [] | DataDiscover[]
 }
 
-export interface DeleteMoviesResponse {
+export interface DeleteDiscoversResponse {
     success: boolean,
     message: string,
 }
 
-export interface CreateMoviesResponse {
+export interface CreateDiscoversResponse {
     success: boolean,
     message: string,
-    data: DataMovie | undefined
+    data: DataDiscover | undefined
 }
 
-export interface GetMovieResponse {
+export interface GetDiscoverResponse {
     success: boolean,
     message: string,
-    data: DataMovie | undefined
+    page: number
+    total_page: number
+    total_movies: number
+    data: DataDiscover | undefined
 }
 
-export interface EditMovieResponse {
+export interface EditDiscoverResponse {
     success: boolean,
     message: string,
 }
 
 // context & services
-export interface DataCreateMovie {
+export interface DataCreateDiscover {
     title: string
-    image: string
-    release_year: number
-    runtime: number
-    storyline: string
-    link_trailer: string
-    watch_options: string[]
-    persons: string[]
-    genres: string[]
+    movies: string[]
 }
 
-export interface MoviesParams {
+export interface DiscoversParams {
     page?: number
     title?: string
 }
 
-export type GetMovies = (params?: MoviesParams, signal?: AbortSignal | undefined) => Promise<GetMoviesResponse>
-export type DeleteMovie = (id: string) => Promise<DeleteMoviesResponse>
-export type CreateMovie = (data: DataCreateMovie) => Promise<CreateMoviesResponse>
-export type GetMovie = (id: string) => Promise<GetMovieResponse>
-export type EditMovie = (id: string, data: DataCreateMovie) => Promise<EditMovieResponse>
+export type GetDiscovers = (params?: DiscoversParams, signal?: AbortSignal | undefined) => Promise<GetDiscoversResponse>
+export type DeleteDiscover = (id: string) => Promise<DeleteDiscoversResponse>
+export type CreateDiscover = (data: DataCreateDiscover) => Promise<CreateDiscoversResponse>
+export type GetDiscover = (id: string, params?: DiscoversParams, signal?: AbortSignal | undefined) => Promise<GetDiscoverResponse>
+export type EditDiscover = (id: string, data: DataCreateDiscover) => Promise<EditDiscoverResponse>
 
-export type LoadDataMovies = (signal?: AbortSignal | undefined) => Promise<GetMoviesResponse>
-export type EditDataMovies = (id: string, data: DataCreateMovie, additionalData: { watch_options: DataWatchOption[], persons: DataPerson[], genres: DataGenre[] }) => Promise<EditMovieResponse>
+export type LoadDataDiscovers = (signal?: AbortSignal | undefined) => Promise<GetDiscoversResponse>
+export type EditDataDiscovers = (id: string, data: DataCreateDiscover, additionalData: { movies: DataMovie[] }) => Promise<EditDiscoverResponse>
 
-export type UseMovies = () => {
-    data: DataMovie[],
-    setData: Dispatch<DataMovie[]>,
-    deleteData: DeleteMovie,
-    createData: CreateMovie,
-    getData: GetMovie,
-    editData: EditDataMovies,
+export type UseDiscovers = () => {
+    data: DataDiscover[],
+    setData: Dispatch<DataDiscover[]>,
+    deleteData: DeleteDiscover,
+    createData: CreateDiscover,
+    getData: GetDiscover,
+    editData: EditDataDiscovers,
     setTotalData: Dispatch<number>,
     loadMoreData: () => Promise,
-    loadData: LoadDataMovies,
+    loadData: LoadDataDiscovers,
     filter: { title: string },
     setFilter: Dispatch<{ title: string }>,
+    dataSingle: DataDiscover
+    loadMoreDataSingle: (id: string) => Promise
 }
 
 // pages & components
-export interface MoviesProps {
-    data: DataMovie[];
+export interface DiscoversProps {
+    data: DataDiscover[];
     total_data: number
 }
 
-export interface MoviesEditProps {
+export interface DiscoversEditProps {
     show: boolean;
 }
 
-export interface InitialStateDataMovie {
+export interface InitialStateDataDiscover {
     title: string,
-    image: string,
-    release_year: number,
-    runtime: number,
-    storyline: string,
-    link_trailer: string,
 }
 
-interface InitialStateListPropertyMovie {
+interface InitialStateListPropertyDiscover {
     label: string;
     name_search: string;
     data_index_list: string;
 }
 
-export interface InitialStateListMovie {
-    watch_options: InitialStateListProperty;
-    persons: InitialStateListProperty;
-    genres: InitialStateListProperty & {
-        value_search: string;
-        data_list: DataGenre[];
-    };
+export interface InitialStateListDiscover {
+    movies: InitialStateListProperty;
 }
 
-export interface InitialStateFilteredAndSelectedDataMovie {
-    watch_options: DataWatchOption[];
-    persons: DataPerson[];
-    genres: DataGenre[];
+export interface InitialStateFilteredAndSelectedDataDiscover {
+    movies: DataMovie[];
 }
 
-export interface MoviesCreateProps {
+export interface DiscoversCreateProps {
     show: boolean;
 }

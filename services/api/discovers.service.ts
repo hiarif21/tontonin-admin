@@ -1,50 +1,30 @@
 import fetchData from "../../config/api.config";
-
-interface DataDiscover {
-    title: string
-    movies: string[]
-}
-
-interface ParamsDiscover {
-    page?: number
-    title?: string
-}
+import { CreateDiscover, DeleteDiscover, EditDiscover, GetDiscover, GetDiscovers } from "../../types/discovers";
 
 const path = '/discovers'
 
-export const getDiscovers = (
-    { page = 1, title = '' }: ParamsDiscover = {},
-    signal: AbortSignal | undefined = undefined
-) => {
+export const getDiscovers: GetDiscovers = ({ page = 1, title = '' } = {}, signal = undefined) => {
 
-    let params = '?'
+    const params = new URLSearchParams({ page: page.toString(), title: title }).toString()
 
-    params += new URLSearchParams({ page: page.toString(), title: title }).toString()
-
-    return fetchData({ method: "GET", path: `${path + params}`, signal })
+    return fetchData({ method: "GET", path: `${path + "?" + params}`, signal })
 }
 
-export const deleteDiscover = (id: string) => {
+export const deleteDiscover: DeleteDiscover = (id) => {
     return fetchData({ method: "DELETE", path: `${path}/${id}` })
 }
 
-export const createDiscover = (data: DataDiscover) => {
+export const createDiscover: CreateDiscover = (data) => {
     return fetchData({ method: "POST", path, data })
 }
 
-export const getDiscover = (
-    id: string,
-    { page = 1 }: ParamsDiscover = {},
-    signal: AbortSignal | undefined = undefined
-) => {
+export const getDiscover: GetDiscover = (id, { page = 1 } = {}, signal = undefined) => {
 
-    let params = '?'
+    let params = new URLSearchParams({ page: page.toString() }).toString()
 
-    params += new URLSearchParams({ page: page.toString() }).toString()
-
-    return fetchData({ method: "GET", path: `${path}/${id + params}`, signal })
+    return fetchData({ method: "GET", path: `${path}/${id + "?" + params}`, signal })
 }
 
-export const editDiscover = (id: string, data: DataDiscover) => {
+export const editDiscover: EditDiscover = (id, data) => {
     return fetchData({ method: "PUT", path: `${path}/${id}`, data })
 }

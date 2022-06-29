@@ -2,7 +2,7 @@ import { useDiscovers } from '../../../../context/discoversContext';
 import SearchField from '../../../molecules/commons/SearchField';
 
 const DiscoversFilterList = () => {
-  const { filter, setFilter }: any = useDiscovers();
+  const { filter, setFilter } = useDiscovers();
 
   return (
     <SearchField

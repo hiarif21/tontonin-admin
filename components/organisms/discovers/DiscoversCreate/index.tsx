@@ -4,40 +4,22 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDiscovers } from '../../../../context/discoversContext';
 import { useMovies } from '../../../../context/moviesContext';
+import {
+  DiscoversCreateProps,
+  InitialStateDataDiscover,
+  InitialStateFilteredAndSelectedDataDiscover,
+  InitialStateListDiscover,
+} from '../../../../types/discovers';
 import Modal from '../../../atoms/Modal';
 import AutoComplete from '../../../molecules/commons/AutoComplete';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
 
-interface DiscoversCreateProps {
-  show: boolean;
-}
-
-interface MoviesData {
-  _id: string;
-  title: string;
-  image: string;
-}
-
-interface InitialStateListProperty {
-  label: string;
-  name_search: string;
-  data_index_list: string;
-}
-
-interface InitialStateList {
-  movies: InitialStateListProperty;
-}
-
-interface InitialStateFilteredAndSelectedData {
-  movies: MoviesData[];
-}
-
-const initialStateData = {
+const initialStateData: InitialStateDataDiscover = {
   title: '',
 };
 
-const initialStateList: InitialStateList = {
+const initialStateList: InitialStateListDiscover = {
   movies: {
     label: 'Movies',
     name_search: 'movies',
@@ -45,7 +27,7 @@ const initialStateList: InitialStateList = {
   },
 };
 
-const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedData =
+const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataDiscover =
   {
     movies: [],
   };
@@ -63,8 +45,8 @@ const DiscoversCreate = ({ show }: DiscoversCreateProps) => {
     initialStateFilteredAndSelectedData
   );
 
-  const { createData }: any = useDiscovers();
-  const UseMovies: any = useMovies();
+  const { createData } = useDiscovers();
+  const UseMovies = useMovies();
 
   const dataMovies = UseMovies.data;
   const loadDataMovies = UseMovies.loadData;
@@ -95,7 +77,9 @@ const DiscoversCreate = ({ show }: DiscoversCreateProps) => {
   const handleSubmit = async () => {
     const result = await createData({
       title: data.title,
-      movies: selectedData.movies,
+      movies: selectedData.movies.map((val) => {
+        return val._id;
+      }),
     });
 
     if (result.success) {

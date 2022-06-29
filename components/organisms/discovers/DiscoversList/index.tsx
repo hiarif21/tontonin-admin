@@ -11,7 +11,7 @@ const DiscoversList = () => {
   const router = useRouter();
   const refLastElement = useRef(null);
 
-  const { data, deleteData, loadMoreData }: any = useDiscovers();
+  const { data, deleteData, loadMoreData } = useDiscovers();
 
   useInfinite(refLastElement, loadMoreData);
 

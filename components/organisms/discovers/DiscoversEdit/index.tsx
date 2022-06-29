@@ -9,40 +9,22 @@ import { usePersons } from '../../../../context/personsContext';
 import { useRoles } from '../../../../context/rolesContext';
 import { useWatchOptions } from '../../../../context/watchOptionsContext';
 import useInfinite from '../../../../hooks/useInfinite';
+import {
+  DiscoversEditProps,
+  InitialStateDataDiscover,
+  InitialStateFilteredAndSelectedDataDiscover,
+  InitialStateListDiscover,
+} from '../../../../types/discovers';
 import Modal from '../../../atoms/Modal';
 import AutoComplete from '../../../molecules/commons/AutoComplete';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
 
-interface DiscoversEditProps {
-  show: boolean;
-}
-
-interface MoviesData {
-  _id: string;
-  title: string;
-  image: string;
-}
-
-interface InitialStateListProperty {
-  label: string;
-  name_search: string;
-  data_index_list: string;
-}
-
-interface InitialStateList {
-  movies: InitialStateListProperty;
-}
-
-interface InitialStateFilteredAndSelectedData {
-  movies: MoviesData[];
-}
-
-const initialStateData = {
+const initialStateData: InitialStateDataDiscover = {
   title: '',
 };
 
-const initialStateList: InitialStateList = {
+const initialStateList: InitialStateListDiscover = {
   movies: {
     label: 'Movies',
     name_search: 'movies',
@@ -50,7 +32,7 @@ const initialStateList: InitialStateList = {
   },
 };
 
-const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedData =
+const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataDiscover =
   {
     movies: [],
   };
@@ -71,27 +53,26 @@ const DiscoversEdit = ({ show }: DiscoversEditProps) => {
     initialStateFilteredAndSelectedData
   );
 
-  const { editData, getData, loadMoreDataSingle, dataSingle }: any =
-    useDiscovers();
-  const UseMovies: any = useMovies();
+  const { editData, getData, loadMoreDataSingle, dataSingle } = useDiscovers();
+  const UseMovies = useMovies();
 
   const dataMovies = UseMovies.data;
   const loadDataMovies = UseMovies.loadData;
   const filterMovies = UseMovies.filter;
   const setFilterMovies = UseMovies.setFilter;
 
-  useInfinite(refLastElementMovies, () => loadMoreDataSingle(id));
+  useInfinite(refLastElementMovies, () => loadMoreDataSingle(id!.toString()));
 
   // load data
   useEffect(() => {
     (async () => {
       if (id) {
-        const result = await getData(id);
+        const result = await getData(id.toString());
         setData({
-          title: result.data.title,
+          title: result.data!.title,
         });
         setSelectedData({
-          movies: result.data.movies,
+          movies: result.data!.movies,
         });
       }
     })();
@@ -128,10 +109,12 @@ const DiscoversEdit = ({ show }: DiscoversEditProps) => {
 
   const handleSubmit = async () => {
     const result = await editData(
-      id,
+      id!.toString(),
       {
         title: data.title,
-        movies: selectedData.movies,
+        movies: selectedData.movies.map((val) => {
+          return val._id;
+        }),
       },
       {
         ...selectedData,
