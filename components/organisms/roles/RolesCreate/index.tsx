@@ -3,13 +3,10 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRoles } from '../../../../context/rolesContext';
+import { RolesCreateProps } from '../../../../types/roles';
 import Modal from '../../../atoms/Modal';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
-
-interface RolesCreateProps {
-  show: boolean;
-}
 
 const initialStateData = {
   name: '',
@@ -20,7 +17,7 @@ const RolesCreate = ({ show }: RolesCreateProps) => {
 
   const [data, setData] = useState(initialStateData);
 
-  const { createData }: any = useRoles();
+  const { createData } = useRoles();
 
   const handleSubmit = async () => {
     const result = await createData(data);

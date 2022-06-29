@@ -2,16 +2,10 @@ import { useEffect } from 'react';
 import RolesTemplate from '../../components/templates/RolesTemplate';
 import { useRoles } from '../../context/rolesContext';
 import { getRoles } from '../../services/api/roles.service';
-
-interface RolesProps {
-  data: {
-    _id: string;
-    name: string;
-  }[];
-}
+import { RolesProps } from '../../types/roles';
 
 const Roles = ({ data }: RolesProps) => {
-  const { setData }: any = useRoles();
+  const { setData } = useRoles();
 
   useEffect(() => {
     setData(data);

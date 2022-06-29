@@ -9,7 +9,7 @@ import Table from '../../../molecules/commons/Table';
 const RolesList = () => {
   const router = useRouter();
 
-  const { data, deleteData }: any = useRoles();
+  const { data, deleteData } = useRoles();
 
   const [alertDelete, setAlertDelete] = useState({
     id: '',

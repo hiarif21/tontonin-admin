@@ -6,17 +6,22 @@ import {
   getRole,
   getRoles,
 } from '../../services/api/roles.service';
-
-interface Props {
-  children: ReactNode;
-}
+import {
+  CreateRole,
+  DataRole,
+  DeleteRole,
+  EditRole,
+  GetRole,
+  GetRoles,
+  UseRoles,
+} from '../../types/roles';
 
 const Context = createContext({});
 
-export const RolesProvider = (props: Props) => {
-  const [data, setData] = useState<any[]>([]);
+export const RolesProvider = (props: { children: ReactNode }) => {
+  const [data, setData] = useState<DataRole[]>([]);
 
-  const deleteData = async (id: string) => {
+  const deleteData: DeleteRole = async (id) => {
     const result = await deleteRole(id);
 
     if (result.success) setData(data.filter((val) => val._id !== id));
@@ -24,7 +29,7 @@ export const RolesProvider = (props: Props) => {
     return result;
   };
 
-  const createData = async (data: { name: string }) => {
+  const createData: CreateRole = async (data) => {
     const result = await createRole(data);
 
     if (result.success) loadData();
@@ -32,7 +37,7 @@ export const RolesProvider = (props: Props) => {
     return result;
   };
 
-  const loadData = async () => {
+  const loadData: GetRoles = async () => {
     const result = await getRoles();
 
     if (result.success) setData(result.data);
@@ -40,12 +45,12 @@ export const RolesProvider = (props: Props) => {
     return result;
   };
 
-  const getData = async (id: string) => {
+  const getData: GetRole = async (id) => {
     const result = await getRole(id);
     return result;
   };
 
-  const editData = async (id: string, newData: { name: string }) => {
+  const editData: EditRole = async (id, newData) => {
     const result = await editRole(id, newData);
 
     if (result.success) {
@@ -75,6 +80,7 @@ export const RolesProvider = (props: Props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export const useRoles = () => {
+// @ts-ignore
+export const useRoles: UseRoles = () => {
   return useContext(Context);
 };

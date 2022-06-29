@@ -3,13 +3,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRoles } from '../../../../context/rolesContext';
+import { RolesEditProps } from '../../../../types/roles';
 import Modal from '../../../atoms/Modal';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
-
-interface RolesEditProps {
-  show: boolean;
-}
 
 const initialStateData = {
   name: '',
@@ -21,14 +18,14 @@ const RolesEdit = ({ show }: RolesEditProps) => {
   const [data, setData] = useState(initialStateData);
   const { id } = router.query;
 
-  const { getData, editData }: any = useRoles();
+  const { getData, editData } = useRoles();
 
   useEffect(() => {
     if (id) {
       (async () => {
-        const result = await getData(id);
+        const result = await getData(id.toString());
         result.success
-          ? setData({ name: result.data.name })
+          ? setData({ name: result.data!.name })
           : toast.error(result.message);
       })();
     }
@@ -37,7 +34,7 @@ const RolesEdit = ({ show }: RolesEditProps) => {
   }, [id]);
 
   const handleSubmit = async () => {
-    const result = await editData(id, data);
+    const result = await editData(id!.toString(), data);
 
     if (result.success) {
       setData(initialStateData);
