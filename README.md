@@ -1,3 +1,7 @@
+> I just made this for mobile. Because i use tailwindCSS for style and i apply mobile first design. in the future, I hope to implement responsive for all breakpoints.
+
+<br>
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
