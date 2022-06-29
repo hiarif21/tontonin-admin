@@ -1,15 +1,5 @@
-import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import { TextFieldProps } from '../../../../types/commons';
 import Input from '../../../atoms/Input';
-
-interface TextFieldProps {
-  type?: HTMLInputTypeAttribute;
-  placeholder?: string;
-  value: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  label: string;
-  name?: string;
-  min?: number;
-}
 
 const TextField = ({
   type,

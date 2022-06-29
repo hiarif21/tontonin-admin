@@ -1,25 +1,13 @@
+import {
+  DashboardTemplateProps,
+  DataDashboard,
+} from '../../../types/dashboard';
 import Cards from '../../organisms/dashboard/Cards';
 import Layout from '../Layout';
 
-interface Key {
-  discovers: string;
-  movies: string;
-  persons: string;
-  streaming_services: string;
-}
-
-interface DashboardTemplateProps {
-  data: {
-    discovers: number;
-    movies: number;
-    persons: number;
-    streaming_services: number;
-  };
-}
-
 const DashboardTemplate = ({ data }: DashboardTemplateProps) => {
   const dataX = Object.keys(data).map((key) => {
-    const val = data[key as keyof Key].toLocaleString();
+    const val = data[key as keyof DataDashboard].toLocaleString();
     key = key.replace('_', ' ');
     return {
       content: (

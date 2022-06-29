@@ -1,13 +1,4 @@
-import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
-
-interface InputProps {
-  type?: HTMLInputTypeAttribute;
-  placeholder?: string;
-  value: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  name?: string;
-  min?: number;
-}
+import { InputProps } from '../../../types/commons';
 
 const Input = ({
   type,

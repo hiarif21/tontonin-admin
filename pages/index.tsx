@@ -1,14 +1,6 @@
 import DashboardTemplate from '../components/templates/DashboardTemplate';
 import { getDashboard } from '../services/api/dashboard.service';
-
-interface DashboardProps {
-  data: {
-    discovers: number;
-    movies: number;
-    persons: number;
-    streaming_services: number;
-  };
-}
+import { DashboardProps } from '../types/dashboard';
 
 const Dashboard = ({ data }: DashboardProps) => {
   return <DashboardTemplate data={data} />;

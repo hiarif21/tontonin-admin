@@ -1,21 +1,10 @@
 import classNames from 'classnames';
-import { ChangeEvent, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+import { AutoCompleteProps } from '../../../../types/commons';
 import Icons from '../../../atoms/Icons';
 import Table from '../Table';
 import TextField from '../TextField';
-
-interface AutoCompleteProps {
-  label: string;
-  valueSearch: string;
-  nameSearch: string;
-  onChangeSearch: (e: ChangeEvent<HTMLInputElement>) => void;
-  dataList: any;
-  dataIndexList: string;
-  onDeleteList: (x: string) => void;
-  onClickList: (val: any, name: string) => void;
-  selectedData: any;
-}
 
 const AutoComplete = ({
   label,

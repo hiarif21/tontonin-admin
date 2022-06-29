@@ -4,10 +4,9 @@ import Input from '../../../atoms/Input';
 interface SearchFieldProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  filtered?: boolean;
 }
 
-const SearchField = ({ value, onChange, filtered }: SearchFieldProps) => {
+const SearchField = ({ value, onChange }: SearchFieldProps) => {
   return (
     <>
       <label>

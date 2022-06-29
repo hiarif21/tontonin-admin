@@ -1,10 +1,6 @@
+import { HeaderCreateAndEditProps } from '../../../../types/commons';
 import Icons from '../../../atoms/Icons';
 
-interface HeaderCreateAndEditProps {
-  type: 'Edit' | 'Create';
-  onSubmit: () => void;
-  onBack: () => void;
-}
 const HeaderCreateAndEdit = ({
   type,
   onSubmit,

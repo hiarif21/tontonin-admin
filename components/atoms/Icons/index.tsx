@@ -18,28 +18,7 @@ import {
   VideoCameraIcon,
   XIcon,
 } from '@heroicons/react/solid';
-
-interface IconsProps {
-  icon:
-    | 'Close'
-    | 'Dashboard'
-    | 'Discovers'
-    | 'Genres'
-    | 'Menu'
-    | 'Movies'
-    | 'Persons'
-    | 'Roles'
-    | 'Streaming Services'
-    | 'Watch Options'
-    | 'Edit'
-    | 'Delete'
-    | 'Plus'
-    | 'Back'
-    | 'Minus Circle'
-    | 'Plus Circle';
-  size?: 'default' | 'small' | 'smallest';
-  color?: 'default' | 'primary' | 'secondary' | 'danger' | 'white';
-}
+import { IconsProps } from '../../../types/commons';
 
 const Icons = ({ icon, size, color }: IconsProps) => {
   const style = classNames('', {

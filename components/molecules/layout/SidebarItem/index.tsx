@@ -1,12 +1,5 @@
 import classNames from 'classnames';
-import { ReactNode } from 'react';
-
-interface SidebarItemProps {
-  icon: ReactNode;
-  title: string;
-  onClick: () => void;
-  active?: boolean;
-}
+import { SidebarItemProps } from '../../../../types/commons';
 
 const SidebarItem = ({
   icon,

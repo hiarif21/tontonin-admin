@@ -1,10 +1,6 @@
+import { TableProps } from '../../../../types/commons';
 import TableData from '../../../atoms/Table/TableData';
 import TableHeader from '../../../atoms/Table/TableHeader';
-
-interface TableProps {
-  columns: any[];
-  dataSource: any[];
-}
 
 const Table = ({ columns, dataSource }: TableProps) => {
   return (

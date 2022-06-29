@@ -1,8 +1,4 @@
-import { ReactNode } from 'react';
-
-interface TableHeaderProps {
-  children: ReactNode;
-}
+import { TableHeaderProps } from '../../../../types/commons';
 
 const TableHeader = ({ children }: TableHeaderProps) => {
   return (

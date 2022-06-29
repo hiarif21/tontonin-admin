@@ -1,11 +1,6 @@
 import { useRef } from 'react';
+import { AlertDeleteProps } from '../../../../types/commons';
 import Modal from '../../../atoms/Modal';
-
-interface AlertDeleteProps {
-  data: string;
-  show: boolean;
-  onClick: (x: boolean) => void;
-}
 
 const AlertDelete = ({ data, show, onClick }: AlertDeleteProps) => {
   const ref = useRef(null);

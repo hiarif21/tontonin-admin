@@ -1,9 +1,5 @@
+import { AddButtonStaticProps } from '../../../../types/commons';
 import Icons from '../../../atoms/Icons';
-
-interface AddButtonStaticProps {
-  title: string;
-  onClick?: () => void;
-}
 
 const AddButtonStatic = ({ title, onClick }: AddButtonStaticProps) => {
   return (

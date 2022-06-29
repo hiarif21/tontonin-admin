@@ -1,9 +1,4 @@
-import { ReactNode } from 'react';
-
-interface TableDataProps {
-  children: ReactNode;
-  title?: string;
-}
+import { TableDataProps } from '../../../../types/commons';
 
 const TableData = ({ children, title }: TableDataProps) => {
   return (

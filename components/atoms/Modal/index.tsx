@@ -1,13 +1,7 @@
 import classNames from 'classnames';
-import { ReactNode, RefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
-
-interface ModalProps {
-  show: boolean;
-  children: ReactNode;
-  onClickOutside?: (event: MouseEvent) => void;
-  _ref?: RefObject<HTMLElement>;
-}
+import { ModalProps } from '../../../types/commons';
 
 const Modal = ({ show, children, onClickOutside, _ref }: ModalProps) => {
   const ref = useRef(null);
