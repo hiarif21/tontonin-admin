@@ -6,17 +6,22 @@ import {
   getGenre,
   getGenres,
 } from '../../services/api/genres.service';
-
-interface Props {
-  children: ReactNode;
-}
+import {
+  CreateGenre,
+  DataGenre,
+  DeleteGenre,
+  EditGenre,
+  GetGenre,
+  GetGenres,
+  UseGenres,
+} from '../../types/genres';
 
 const Context = createContext({});
 
-export const GenresProvider = (props: Props) => {
-  const [data, setData] = useState<any[]>([]);
+export const GenresProvider = (props: { children: ReactNode }) => {
+  const [data, setData] = useState<DataGenre[]>([]);
 
-  const deleteData = async (id: string) => {
+  const deleteData: DeleteGenre = async (id) => {
     const result = await deleteGenre(id);
 
     if (result.success) setData(data.filter((val) => val._id !== id));
@@ -24,7 +29,7 @@ export const GenresProvider = (props: Props) => {
     return result;
   };
 
-  const createData = async (data: { name: string }) => {
+  const createData: CreateGenre = async (data) => {
     const result = await createGenre(data);
 
     if (result.success) loadData();
@@ -32,7 +37,7 @@ export const GenresProvider = (props: Props) => {
     return result;
   };
 
-  const loadData = async () => {
+  const loadData: GetGenres = async () => {
     const result = await getGenres();
 
     if (result.success) setData(result.data);
@@ -40,12 +45,12 @@ export const GenresProvider = (props: Props) => {
     return result;
   };
 
-  const getData = async (id: string) => {
+  const getData: GetGenre = async (id) => {
     const result = await getGenre(id);
     return result;
   };
 
-  const editData = async (id: string, newData: { name: string }) => {
+  const editData: EditGenre = async (id, newData) => {
     const result = await editGenre(id, newData);
 
     if (result.success) {
@@ -75,6 +80,7 @@ export const GenresProvider = (props: Props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export const useGenres = () => {
+// @ts-ignore
+export const useGenres: UseGenres = () => {
   return useContext(Context);
 };

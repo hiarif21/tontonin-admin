@@ -9,7 +9,7 @@ import Table from '../../../molecules/commons/Table';
 const GenresList = () => {
   const router = useRouter();
 
-  const { data, deleteData }: any = useGenres();
+  const { data, deleteData } = useGenres();
 
   const [alertDelete, setAlertDelete] = useState({
     id: '',

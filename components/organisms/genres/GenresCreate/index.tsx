@@ -3,13 +3,10 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useGenres } from '../../../../context/genresContext';
+import { GenresCreateProps } from '../../../../types/genres';
 import Modal from '../../../atoms/Modal';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
-
-interface GenresCreateProps {
-  show: boolean;
-}
 
 const initialStateData = {
   name: '',
@@ -20,7 +17,7 @@ const GenresCreate = ({ show }: GenresCreateProps) => {
 
   const [data, setData] = useState(initialStateData);
 
-  const { createData }: any = useGenres();
+  const { createData } = useGenres();
 
   const handleSubmit = async () => {
     const result = await createData(data);

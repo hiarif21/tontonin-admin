@@ -2,16 +2,10 @@ import { useEffect } from 'react';
 import GenresTemplate from '../../components/templates/GenresTemplate';
 import { useGenres } from '../../context/genresContext';
 import { getGenres } from '../../services/api/genres.service';
-
-interface GenresProps {
-  data: {
-    _id: string;
-    name: string;
-  }[];
-}
+import { GenresProps } from '../../types/genres';
 
 const Genres = ({ data }: GenresProps) => {
-  const { setData }: any = useGenres();
+  const { setData } = useGenres();
 
   useEffect(() => {
     setData(data);
