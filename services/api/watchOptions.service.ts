@@ -1,42 +1,28 @@
 import fetchData from "../../config/api.config";
-
-interface DataWatchOption {
-    streaming_service: string
-    title: string
-    link_streaming: string
-}
-
-interface ParamsWatchOption {
-    page?: number
-    title?: string
-}
+import { CreateWatchOption, DeleteWatchOption, EditWatchOption, GetWatchOption, GetWatchOptions } from "../../types/watchOptions";
 
 const path = '/watch-options'
 
-export const getWatchOptions = (
-    { page = 1, title = '' }: ParamsWatchOption = {},
-    signal: AbortSignal | undefined = undefined
+export const getWatchOptions: GetWatchOptions = ({ page = 1, title = '' } = {}, signal = undefined
 ) => {
 
-    let params = '?'
+    const params = new URLSearchParams({ page: page.toString(), title: title }).toString()
 
-    params += new URLSearchParams({ page: page.toString(), title: title }).toString()
-
-    return fetchData({ method: "GET", path: `${path + params}`, signal })
+    return fetchData({ method: "GET", path: `${path + "?" + params}`, signal })
 }
 
-export const deleteWatchOption = (id: string) => {
+export const deleteWatchOption: DeleteWatchOption = (id: string) => {
     return fetchData({ method: "DELETE", path: `${path}/${id}` })
 }
 
-export const createWatchOption = (data: DataWatchOption) => {
+export const createWatchOption: CreateWatchOption = (data) => {
     return fetchData({ method: "POST", path, data })
 }
 
-export const getWatchOption = (id: string) => {
+export const getWatchOption: GetWatchOption = (id) => {
     return fetchData({ method: "GET", path: `${path}/${id}` })
 }
 
-export const editWatchOption = (id: string, data: DataWatchOption) => {
+export const editWatchOption: EditWatchOption = (id, data) => {
     return fetchData({ method: "PUT", path: `${path}/${id}`, data })
 }

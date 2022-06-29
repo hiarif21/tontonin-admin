@@ -11,7 +11,7 @@ const WatchOptionsList = () => {
   const router = useRouter();
   const refLastElement = useRef(null);
 
-  const { data, deleteData, loadMoreData }: any = useWatchOptions();
+  const { data, deleteData, loadMoreData } = useWatchOptions();
 
   useInfinite(refLastElement, loadMoreData);
 

@@ -2,17 +2,10 @@ import { useEffect } from 'react';
 import WatchOptionsTemplate from '../../components/templates/WatchOptionsTemplate';
 import { useWatchOptions } from '../../context/watchOptionsContext';
 import { getWatchOptions } from '../../services/api/watchOptions.service';
-
-interface WatchOptionsProps {
-  data: {
-    _id: string;
-    name: string;
-  }[];
-  total_data: number;
-}
+import { WatchOptionsProps } from '../../types/watchOptions';
 
 const WatchOptions = ({ data, total_data }: WatchOptionsProps) => {
-  const { setData, setTotalData }: any = useWatchOptions();
+  const { setData, setTotalData } = useWatchOptions();
 
   useEffect(() => {
     setData(data);

@@ -12,21 +12,20 @@ import {
   getWatchOption,
   getWatchOptions,
 } from '../../services/api/watchOptions.service';
-
-interface Props {
-  children: ReactNode;
-}
-
-interface DataWatchOption {
-  streaming_service: string;
-  title: string;
-  link_streaming: string;
-}
+import {
+  CreateWatchOption,
+  DataWatchOption,
+  DeleteWatchOption,
+  EditDataWatchOptions,
+  GetWatchOption,
+  LoadDataWatchOptions,
+  UseWatchOptions,
+} from '../../types/watchOptions';
 
 const Context = createContext({});
 
-export const WatchOptionsProvider = (props: Props) => {
-  const [data, setData] = useState<any[]>([]);
+export const WatchOptionsProvider = (props: { children: ReactNode }) => {
+  const [data, setData] = useState<DataWatchOption[]>([]);
   const [totalData, setTotalData] = useState(0);
   const [filter, setFilter] = useState({
     title: '',
@@ -44,7 +43,7 @@ export const WatchOptionsProvider = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
-  const deleteData = async (id: string) => {
+  const deleteData: DeleteWatchOption = async (id) => {
     const result = await deleteWatchOption(id);
 
     if (result.success) {
@@ -55,7 +54,7 @@ export const WatchOptionsProvider = (props: Props) => {
     return result;
   };
 
-  const createData = async (data: DataWatchOption) => {
+  const createData: CreateWatchOption = async (data) => {
     const result = await createWatchOption(data);
 
     if (result.success) loadData();
@@ -63,7 +62,7 @@ export const WatchOptionsProvider = (props: Props) => {
     return result;
   };
 
-  const loadData = async (signal: AbortSignal | undefined = undefined) => {
+  const loadData: LoadDataWatchOptions = async (signal = undefined) => {
     const result = await getWatchOptions({ title: filter.title }, signal);
 
     if (result?.success) {
@@ -74,15 +73,15 @@ export const WatchOptionsProvider = (props: Props) => {
     return result;
   };
 
-  const getData = async (id: string) => {
+  const getData: GetWatchOption = async (id) => {
     const result = await getWatchOption(id);
     return result;
   };
 
-  const editData = async (
-    id: string,
-    newData: DataWatchOption,
-    additionalData: { name: string }
+  const editData: EditDataWatchOptions = async (
+    id,
+    newData,
+    additionalData
   ) => {
     const result = await editWatchOption(id, newData);
 
@@ -92,10 +91,9 @@ export const WatchOptionsProvider = (props: Props) => {
           if (val._id === id) {
             return {
               ...val,
-              streaming_service: {
-                _id: newData.streaming_service,
-                name: additionalData.name,
-              },
+              streaming_service: additionalData.streaming_services.find(
+                (value) => value._id === newData.streaming_service
+              )!,
               title: newData.title,
               link_streaming: newData.link_streaming,
             };
@@ -138,6 +136,7 @@ export const WatchOptionsProvider = (props: Props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export const useWatchOptions = () => {
+// @ts-ignore.
+export const useWatchOptions: UseWatchOptions = () => {
   return useContext(Context);
 };

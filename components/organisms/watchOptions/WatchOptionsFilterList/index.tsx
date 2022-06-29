@@ -2,7 +2,7 @@ import { useWatchOptions } from '../../../../context/watchOptionsContext';
 import SearchField from '../../../molecules/commons/SearchField';
 
 const WatchOptionsFilterList = () => {
-  const { filter, setFilter }: any = useWatchOptions();
+  const { filter, setFilter } = useWatchOptions();
 
   return (
     <SearchField

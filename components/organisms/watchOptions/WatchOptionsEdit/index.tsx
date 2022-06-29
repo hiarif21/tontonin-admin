@@ -4,38 +4,23 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useStreamingServices } from '../../../../context/streamingServicesContext';
 import { useWatchOptions } from '../../../../context/watchOptionsContext';
+import {
+  InitialStateDataWatchOption,
+  InitialStateFilteredAndSelectedDataWatchOption,
+  InitialStateListWatchOption,
+  WatchOptionsEditProps,
+} from '../../../../types/watchOptions';
 import Modal from '../../../atoms/Modal';
 import AutoComplete from '../../../molecules/commons/AutoComplete';
 import HeaderCreateAndEdit from '../../../molecules/commons/HeaderCreateAndEdit';
 import TextField from '../../../molecules/commons/TextField';
 
-interface WatchOptionsEditProps {
-  show: boolean;
-}
-
-interface StreamingServicesData {
-  _id: string;
-  name: string;
-}
-
-interface InitialStateStreamingServices {
-  label: string;
-  value_search: string;
-  name_search: string;
-  data_list: StreamingServicesData[];
-  data_index_list: string;
-}
-
-interface InitialStateFilteredAndSelectedData {
-  streaming_services: StreamingServicesData[];
-}
-
-const initialStateData = {
+const initialStateData: InitialStateDataWatchOption = {
   title: '',
   link_streaming: '',
 };
 
-const initialStateStreamingServices: InitialStateStreamingServices = {
+const initialStateList: InitialStateListWatchOption = {
   label: 'Streaming Services',
   value_search: '',
   name_search: 'streaming services',
@@ -43,7 +28,7 @@ const initialStateStreamingServices: InitialStateStreamingServices = {
   data_index_list: 'name',
 };
 
-const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedData =
+const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataWatchOption =
   {
     streaming_services: [],
   };
@@ -54,9 +39,7 @@ const WatchOptionsEdit = ({ show }: WatchOptionsEditProps) => {
   const { id } = router.query;
 
   const [data, setData] = useState(initialStateData);
-  const [streamingServices, setStreamingServices] = useState(
-    initialStateStreamingServices
-  );
+  const [list, setList] = useState(initialStateList);
 
   const [filteredData, setFilteredData] = useState(
     initialStateFilteredAndSelectedData
@@ -65,20 +48,20 @@ const WatchOptionsEdit = ({ show }: WatchOptionsEditProps) => {
     initialStateFilteredAndSelectedData
   );
 
-  const { getData, editData }: any = useWatchOptions();
-  const { loadData }: any = useStreamingServices();
+  const { getData, editData } = useWatchOptions();
+  const { loadData } = useStreamingServices();
 
   useEffect(() => {
     // get data
     if (id) {
       (async () => {
-        const result = await getData(id);
+        const result = await getData(id.toString());
         setData({
-          title: result.data.title,
-          link_streaming: result.data.link_streaming,
+          title: result.data!.title,
+          link_streaming: result.data!.link_streaming,
         });
         setSelectedData({
-          streaming_services: [result.data.streaming_service],
+          streaming_services: [result.data!.streaming_service],
         });
       })();
     }
@@ -90,42 +73,40 @@ const WatchOptionsEdit = ({ show }: WatchOptionsEditProps) => {
   useEffect(() => {
     (async () => {
       const result = await loadData();
-      setStreamingServices({ ...streamingServices, data_list: result.data });
+      setList({ ...list, data_list: result.data });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //   filter list
   useEffect(() => {
-    if (streamingServices.value_search === '') {
-      setFilteredData({ streaming_services: streamingServices.data_list });
+    if (list.value_search === '') {
+      setFilteredData({ streaming_services: list.data_list });
     } else {
       setFilteredData({
-        streaming_services: streamingServices.data_list.filter((val) =>
-          val.name
-            .toLowerCase()
-            .includes(streamingServices.value_search.toLowerCase())
+        streaming_services: list.data_list.filter((val) =>
+          val.name.toLowerCase().includes(list.value_search.toLowerCase())
         ),
       });
     }
-  }, [streamingServices.data_list, streamingServices.value_search]);
+  }, [list.data_list, list.value_search]);
 
   const handleSubmit = async () => {
     const result = await editData(
-      id,
+      id!.toString(),
       {
         title: data.title,
         link_streaming: data.link_streaming,
         streaming_service: selectedData.streaming_services[0]._id,
       },
       {
-        name: selectedData.streaming_services[0].name,
+        ...selectedData,
       }
     );
 
     if (result.success) {
       setData(initialStateData);
-      setStreamingServices(initialStateStreamingServices);
+      setList(initialStateList);
       setFilteredData(initialStateFilteredAndSelectedData);
       setSelectedData(initialStateFilteredAndSelectedData);
       handleBack();
@@ -161,17 +142,17 @@ const WatchOptionsEdit = ({ show }: WatchOptionsEditProps) => {
             onChange={(e) => setData({ ...data, title: e.target.value })}
           />
           <AutoComplete
-            label={streamingServices.label}
-            valueSearch={streamingServices.value_search}
-            nameSearch={streamingServices.name_search}
+            label={list.label}
+            valueSearch={list.value_search}
+            nameSearch={list.name_search}
             onChangeSearch={(e) =>
-              setStreamingServices({
-                ...streamingServices,
+              setList({
+                ...list,
                 value_search: e.target.value,
               })
             }
             dataList={filteredData.streaming_services}
-            dataIndexList={streamingServices.data_index_list}
+            dataIndexList={list.data_index_list}
             onClickList={(val) =>
               setSelectedData({ streaming_services: [val] })
             }
