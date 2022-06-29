@@ -3,8 +3,7 @@ import { CreateWatchOption, DeleteWatchOption, EditWatchOption, GetWatchOption, 
 
 const path = '/watch-options'
 
-export const getWatchOptions: GetWatchOptions = ({ page = 1, title = '' } = {}, signal = undefined
-) => {
+export const getWatchOptions: GetWatchOptions = ({ page = 1, title = '' } = {}, signal = undefined) => {
 
     const params = new URLSearchParams({ page: page.toString(), title: title }).toString()
 

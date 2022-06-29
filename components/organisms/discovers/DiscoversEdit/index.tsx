@@ -61,7 +61,9 @@ const DiscoversEdit = ({ show }: DiscoversEditProps) => {
   const filterMovies = UseMovies.filter;
   const setFilterMovies = UseMovies.setFilter;
 
-  useInfinite(refLastElementMovies, () => loadMoreDataSingle(id!.toString()));
+  useInfinite(refLastElementMovies, () => {
+    if (id) loadMoreDataSingle(id.toString());
+  });
 
   // load data
   useEffect(() => {

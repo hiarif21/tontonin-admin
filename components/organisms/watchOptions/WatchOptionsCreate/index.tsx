@@ -36,6 +36,8 @@ const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataWa
 const WatchOptionsCreate = ({ show }: WatchOptionsCreateProps) => {
   const router = useRouter();
 
+  const { method } = router.query;
+
   const [data, setData] = useState(initialStateData);
   const [list, setList] = useState(initialStateList);
 
@@ -46,8 +48,8 @@ const WatchOptionsCreate = ({ show }: WatchOptionsCreateProps) => {
     initialStateFilteredAndSelectedData
   );
 
-  const { createData }: any = useWatchOptions();
-  const { loadData }: any = useStreamingServices();
+  const { createData } = useWatchOptions();
+  const { loadData } = useStreamingServices();
 
   //   load data list
   useEffect(() => {
@@ -56,7 +58,7 @@ const WatchOptionsCreate = ({ show }: WatchOptionsCreateProps) => {
       setList({ ...list, data_list: result.data });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [method]);
 
   //   filter list
   useEffect(() => {

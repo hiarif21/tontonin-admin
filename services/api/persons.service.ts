@@ -3,16 +3,11 @@ import { CreatePerson, DeletePerson, EditPerson, GetPerson, GetPersons } from ".
 
 const path = '/persons'
 
-export const getPersons: GetPersons = (
-    { page = 1, name = '' } = {},
-    signal = undefined
-) => {
+export const getPersons: GetPersons = ({ page = 1, name = '' } = {}, signal = undefined) => {
 
-    let params = '?'
+    const params = new URLSearchParams({ page: page.toString(), name: name }).toString()
 
-    params += new URLSearchParams({ page: page.toString(), name: name }).toString()
-
-    return fetchData({ method: "GET", path: `${path + params}`, signal })
+    return fetchData({ method: "GET", path: `${path + "?" + params}`, signal })
 }
 
 export const deletePerson: DeletePerson = (id) => {

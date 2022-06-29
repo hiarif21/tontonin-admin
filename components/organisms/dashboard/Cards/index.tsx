@@ -1,10 +1,5 @@
+import { CardsProps } from '../../../../types/dashboard';
 import Card from '../../../molecules/commons/Card';
-
-interface CardsProps {
-  data: {
-    content: any;
-  }[];
-}
 
 const Cards = ({ data }: CardsProps) => {
   return (

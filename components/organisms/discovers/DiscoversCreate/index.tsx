@@ -35,6 +35,8 @@ const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataDi
 const DiscoversCreate = ({ show }: DiscoversCreateProps) => {
   const router = useRouter();
 
+  const { method } = router.query;
+
   const [data, setData] = useState(initialStateData);
   const [list, setList] = useState(initialStateList);
 
@@ -52,8 +54,6 @@ const DiscoversCreate = ({ show }: DiscoversCreateProps) => {
   const loadDataMovies = UseMovies.loadData;
   const filterMovies = UseMovies.filter;
   const setFilterMovies = UseMovies.setFilter;
-
-  const { method } = router.query;
 
   // load list
   useEffect(() => {

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { usePersons } from '../../../../context/personsContext';
 import useInfinite from '../../../../hooks/useInfinite';
+import { DataPerson } from '../../../../types/persons';
 import Icons from '../../../atoms/Icons';
 import AlertDelete from '../../../molecules/commons/AlertDelete';
 import Table from '../../../molecules/commons/Table';
@@ -72,7 +73,7 @@ const PersonsList = () => {
     },
   ];
 
-  const dataSource = data.map((val: any) => {
+  const dataSource = data.map((val: DataPerson) => {
     return { ...val, role: val.role.name };
   });
 

@@ -10,3 +10,8 @@ export interface DashboardProps {
 }
 
 export interface DashboardTemplateProps extends DashboardProps { }
+export interface CardsProps {
+    data: {
+        content: any;
+    }[];
+}

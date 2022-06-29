@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useWatchOptions } from '../../../../context/watchOptionsContext';
 import useInfinite from '../../../../hooks/useInfinite';
+import { DataWatchOption } from '../../../../types/watchOptions';
 import Icons from '../../../atoms/Icons';
 import AlertDelete from '../../../molecules/commons/AlertDelete';
 import Table from '../../../molecules/commons/Table';
@@ -72,7 +73,7 @@ const WatchOptionsList = () => {
     },
   ];
 
-  const dataSource = data.map((val: any) => {
+  const dataSource = data.map((val: DataWatchOption) => {
     return { ...val, streaming_service: val.streaming_service.name };
   });
 

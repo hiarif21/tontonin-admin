@@ -3,10 +3,7 @@ import { CreateMovie, DeleteMovie, EditMovie, GetMovie, GetMovies } from "../../
 
 const path = '/movies'
 
-export const getMovies: GetMovies = (
-    { page = 1, title = '' } = {},
-    signal = undefined
-) => {
+export const getMovies: GetMovies = ({ page = 1, title = '' } = {}, signal = undefined) => {
 
     const params = new URLSearchParams({ page: page.toString(), title: title }).toString()
 

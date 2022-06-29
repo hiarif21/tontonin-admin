@@ -57,6 +57,8 @@ const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataMo
 const MoviesCreate = ({ show }: MoviesCreateProps) => {
   const router = useRouter();
 
+  const { method } = router.query;
+
   const [data, setData] = useState(initialStateData);
   const [list, setList] = useState(initialStateList);
 
@@ -83,8 +85,6 @@ const MoviesCreate = ({ show }: MoviesCreateProps) => {
   const setFilterPersons = UsePersons.setFilter;
 
   const loadDataGenres = UseGenres.loadData;
-
-  const { method } = router.query;
 
   // load list
   useEffect(() => {

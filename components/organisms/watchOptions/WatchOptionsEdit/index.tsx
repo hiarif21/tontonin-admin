@@ -36,7 +36,7 @@ const initialStateFilteredAndSelectedData: InitialStateFilteredAndSelectedDataWa
 const WatchOptionsEdit = ({ show }: WatchOptionsEditProps) => {
   const router = useRouter();
 
-  const { id } = router.query;
+  const { id, method } = router.query;
 
   const [data, setData] = useState(initialStateData);
   const [list, setList] = useState(initialStateList);
@@ -76,7 +76,7 @@ const WatchOptionsEdit = ({ show }: WatchOptionsEditProps) => {
       setList({ ...list, data_list: result.data });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [method]);
 
   //   filter list
   useEffect(() => {
