@@ -69,11 +69,13 @@ export interface AlertDeleteProps {
 
 export interface AutoCompleteProps {
     label: string;
+    label2?: string;
     valueSearch: string;
     nameSearch: string;
     onChangeSearch: (e: ChangeEvent<HTMLInputElement>) => void;
     dataList: any;
     dataIndexList: string;
+    dataIndexList2?: string;
     onDeleteList: (x: string) => void;
     onClickList: (val: any, name: string) => void;
     selectedData: any;

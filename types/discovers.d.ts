@@ -104,7 +104,7 @@ interface InitialStateListPropertyDiscover {
 }
 
 export interface InitialStateListDiscover {
-    movies: InitialStateListProperty;
+    movies: InitialStateListPropertyDiscover;
 }
 
 export interface InitialStateFilteredAndSelectedDataDiscover {

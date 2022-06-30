@@ -112,14 +112,16 @@ export interface InitialStateDataMovie {
 
 interface InitialStateListPropertyMovie {
     label: string;
+    label_2?: string;
     name_search: string;
     data_index_list: string;
+    data_index_list_2?: string;
 }
 
 export interface InitialStateListMovie {
-    watch_options: InitialStateListProperty;
-    persons: InitialStateListProperty;
-    genres: InitialStateListProperty & {
+    watch_options: InitialStateListPropertyMovie;
+    persons: InitialStateListPropertyMovie;
+    genres: InitialStateListPropertyMovie & {
         value_search: string;
         data_list: DataGenre[];
     };
