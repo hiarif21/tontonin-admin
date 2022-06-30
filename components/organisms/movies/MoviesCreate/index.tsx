@@ -22,7 +22,7 @@ const initialStateData: InitialStateDataMovie = {
   title: '',
   image: '',
   release_year: 0,
-  runtime: 0,
+  runtime: '',
   storyline: '',
   link_trailer: '',
 };
@@ -216,12 +216,8 @@ const MoviesCreate = ({ show }: MoviesCreateProps) => {
           />
           <TextField
             label="Runtime (minutes)"
-            min={10}
-            type={'number'}
-            value={data.runtime.toString()}
-            onChange={(e) =>
-              setData({ ...data, runtime: e.target.valueAsNumber })
-            }
+            value={data.runtime}
+            onChange={(e) => setData({ ...data, runtime: e.target.value })}
           />
           <TextField
             label="Storyline"

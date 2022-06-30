@@ -10,7 +10,7 @@ export interface DataMovie {
     title: string
     image: string
     release_year: number
-    runtime: number
+    runtime: string
     storyline: string
     link_trailer: string
     watch_options: DataWatchOption[]
@@ -55,7 +55,7 @@ export interface DataCreateMovie {
     title: string
     image: string
     release_year: number
-    runtime: number
+    runtime: string
     storyline: string
     link_trailer: string
     watch_options: string[]
@@ -105,7 +105,7 @@ export interface InitialStateDataMovie {
     title: string,
     image: string,
     release_year: number,
-    runtime: number,
+    runtime: string,
     storyline: string,
     link_trailer: string,
 }
