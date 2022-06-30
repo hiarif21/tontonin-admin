@@ -19,11 +19,12 @@ const Table = ({ columns, dataSource }: TableProps) => {
               return (
                 <tr key={value._id | index}>
                   {columns.map((val, idx) => {
+                    const key = val.dataIndex;
                     return (
                       <TableData title={value[val.dataIndex]} key={idx}>
                         {val.render
-                          ? val.render(value[val.dataIndex], value)
-                          : value[val.dataIndex]}
+                          ? val.render(eval('value.' + key), value)
+                          : eval('value.' + key)}
                       </TableData>
                     );
                   })}

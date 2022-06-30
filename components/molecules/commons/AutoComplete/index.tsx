@@ -8,11 +8,13 @@ import TextField from '../TextField';
 
 const AutoComplete = ({
   label,
+  label2,
   valueSearch,
   nameSearch,
   onChangeSearch,
   dataList,
   dataIndexList,
+  dataIndexList2,
   onClickList,
   selectedData,
   onDeleteList,
@@ -27,7 +29,7 @@ const AutoComplete = ({
 
   useOnClickOutside(ref, handleClickOutside);
 
-  const columns = [
+  let columns = [
     {
       title: label,
       dataIndex: dataIndexList,
@@ -45,6 +47,13 @@ const AutoComplete = ({
       },
     },
   ];
+
+  if (dataIndexList2) {
+    columns.splice(1, 0, {
+      title: label2 ? label2 : '',
+      dataIndex: dataIndexList2,
+    });
+  }
 
   return (
     <>
@@ -75,7 +84,8 @@ const AutoComplete = ({
                       selectedData.find((value: any) => value._id === val._id)
                     }
                     className="w-full px-5 py-3 text-left hover:bg-slate-100 disabled:bg-slate-100 disabled:text-slate-300">
-                    {val[dataIndexList]}
+                    {eval('val.' + dataIndexList)}
+                    {dataIndexList2 && ' - ' + eval('val.' + dataIndexList2)}
                   </button>
                 </li>
               );
