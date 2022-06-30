@@ -49,7 +49,7 @@ const WatchOptionsList = () => {
     },
     {
       title: 'Service',
-      dataIndex: 'streaming_service',
+      dataIndex: 'streaming_service.name',
     },
     {
       title: 'Action',
@@ -73,10 +73,6 @@ const WatchOptionsList = () => {
     },
   ];
 
-  const dataSource = data.map((val: DataWatchOption) => {
-    return { ...val, streaming_service: val.streaming_service.name };
-  });
-
   return (
     <>
       <AlertDelete
@@ -85,7 +81,7 @@ const WatchOptionsList = () => {
         onClick={handleClickAlertDelete}
       />
       <div>
-        <Table columns={columns} dataSource={dataSource} />
+        <Table columns={columns} dataSource={data} />
         <div ref={refLastElement}></div>
       </div>
     </>

@@ -49,7 +49,7 @@ const PersonsList = () => {
     },
     {
       title: 'Role',
-      dataIndex: 'role',
+      dataIndex: 'role.name',
     },
     {
       title: 'Action',
@@ -73,10 +73,6 @@ const PersonsList = () => {
     },
   ];
 
-  const dataSource = data.map((val: DataPerson) => {
-    return { ...val, role: val.role.name };
-  });
-
   return (
     <>
       <AlertDelete
@@ -85,7 +81,7 @@ const PersonsList = () => {
         onClick={handleClickAlertDelete}
       />
       <div>
-        <Table columns={columns} dataSource={dataSource} />
+        <Table columns={columns} dataSource={data} />
         <div ref={refLastElement}></div>
       </div>
     </>

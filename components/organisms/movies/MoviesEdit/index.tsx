@@ -30,13 +30,17 @@ const initialStateData: InitialStateDataMovie = {
 const initialStateList: InitialStateListMovie = {
   watch_options: {
     label: 'Watch Options',
+    label_2: 'Service',
     name_search: 'watch options',
     data_index_list: 'title',
+    data_index_list_2: 'streaming_service.name',
   },
   persons: {
     label: 'Persons',
+    label_2: 'Role',
     name_search: 'persons',
     data_index_list: 'name',
+    data_index_list_2: 'role.name',
   },
   genres: {
     label: 'Genres',
@@ -262,6 +266,7 @@ const MoviesEdit = ({ show }: MoviesEditProps) => {
           />
           <AutoComplete
             label={list.watch_options.label}
+            label2={list.watch_options.label_2}
             valueSearch={filterWatchOptions.title}
             nameSearch={list.watch_options.name_search}
             onChangeSearch={(e) =>
@@ -269,6 +274,7 @@ const MoviesEdit = ({ show }: MoviesEditProps) => {
             }
             dataList={filteredData.watch_options}
             dataIndexList={list.watch_options.data_index_list}
+            dataIndexList2={list.watch_options.data_index_list_2}
             onClickList={(val) =>
               setSelectedData({
                 ...selectedData,
@@ -287,11 +293,13 @@ const MoviesEdit = ({ show }: MoviesEditProps) => {
           />
           <AutoComplete
             label={list.persons.label}
+            label2={list.persons.label_2}
             valueSearch={filterPersons.name}
             nameSearch={list.persons.name_search}
             onChangeSearch={(e) => setFilterPersons({ name: e.target.value })}
             dataList={filteredData.persons}
             dataIndexList={list.persons.data_index_list}
+            dataIndexList2={list.persons.data_index_list_2}
             onClickList={(val) =>
               setSelectedData({
                 ...selectedData,
